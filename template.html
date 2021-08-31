@@ -1,0 +1,43 @@
+<html>
+<head>
+
+
+<!-- <<<<<<<<<<<<<<<<<<<<<<<<<< SCRIPTS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+<script type="text/javascript" src="fabric-4.5.0.js"></script>
+<script type="text/javascript" src="fabfunctions.js"></script>
+
+
+
+</head>
+<body>
+
+<canvas id="surface" style="display:none;"></canvas>
+
+<input type="text" id="phantom_indata" name="indata"/>
+<input type="text" id="phantom_outdata" name="outdata"/>
+
+<script>
+	// Prepare fabric classes, canvas, objects
+	async function prepareProcess(cw,ch,indate){
+    var startDate = new Date()
+		fabFunctions.init();
+    console.log(`init ${(new Date())-startDate}ms`)
+	  await fabFunctions.prepareObjects(cw,ch,indate);
+	}
+
+  async function filterJSON(json) {
+    return await fabFunctions.filterJSON(json)
+  }
+
+	// Create PNGs
+	function doJob() {
+    var startDate = new Date()
+		var res = fabFunctions.doJob();
+    console.log(`job ${(new Date())-startDate}ms`)
+    return res
+	}
+</script>
+
+</body>
+
+</html>
