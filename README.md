@@ -24,28 +24,22 @@ var json = canvas.toJSON();
 
 ### Post JSON to server
 ```
-var axios = require('axios');
-var data = JSON.stringify({
-  "mydata": json // your fabric json
-});
+var data = JSON.stringify({ 'mydata': json })
 
-var config = {
-  method: 'post',
-  url: 'localhost:44533/process',
-  headers: { 
-    'Content-Type': 'application/json'
-  },
-  responseType: 'blob',
-  data : data
-};
+var xhr = new XMLHttpRequest()
+xhr.withCredentials = true
+xhr.responseType = 'blob'
 
-axios(config)
-.then(function (response) {
-  var blob = res.data
-  var src = window.URL.createObjectURL(blob)
-  window.open(src)
+xhr.addEventListener('readystatechange', function() {
+  if (this.readyState === 4) {
+    const blob = this.response
+    const src = window.URL.createObjectURL(blob)
+    window.open(src)
+  }
 })
-.catch(function (error) {
-  console.log(error);
-});
+
+xhr.open('POST', 'http://localhost:44533/process')
+xhr.setRequestHeader('Content-Type', 'application/json')
+
+xhr.send(data)
 ```
